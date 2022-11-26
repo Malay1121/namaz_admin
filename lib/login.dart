@@ -52,7 +52,7 @@ class _LoginState extends State<Login> {
             preference!.setBool('masjidAdmin', body['masjidAdmin']);
             preference!.setBool('namazAdmin', body['namazAdmin']);
 
-            if (body['masjidAdmin'] == true) {
+            if (body['masjidAdmin'] != false) {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
