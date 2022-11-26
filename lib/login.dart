@@ -171,20 +171,12 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MainScreen()));
-                      },
-                      child: Text(
-                        'Forgot Password ?',
-                        style: GoogleFonts.dmSans(
-                          textStyle: TextStyle(
-                            color: Color(0xFF77B255),
-                            fontSize: _mediaQuery.width / 31.25,
-                          ),
+                    Text(
+                      'Forgot Password ?',
+                      style: GoogleFonts.dmSans(
+                        textStyle: TextStyle(
+                          color: Color(0xFF77B255),
+                          fontSize: _mediaQuery.width / 31.25,
                         ),
                       ),
                     ),
