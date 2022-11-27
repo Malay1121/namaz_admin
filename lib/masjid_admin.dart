@@ -129,124 +129,128 @@ class _MasjidTimingScreenState extends State<MasjidTimingScreen> {
   @override
   Widget build(BuildContext context) {
     var namazKeys = _namaz_admin['timing'].keys;
-    return Scaffold(
-      backgroundColor: Color(0xFF1E1E1E),
-      body: ModalProgressHUD(
-        inAsyncCall: _showSpinner,
-        child: Column(
-          children: [
-            Container(
-              height: responsiveHeight(100, context),
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/tab_design.png'),
-                  fit: BoxFit.fill,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: Color(0xFF1E1E1E),
+        body: ModalProgressHUD(
+          inAsyncCall: _showSpinner,
+          child: Column(
+            children: [
+              Container(
+                height: responsiveHeight(100, context),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/tab_design.png'),
+                    fit: BoxFit.fill,
+                  ),
+                  color: Color(0xFF77B255),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
                 ),
-                color: Color(0xFF77B255),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
-                ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(
-                  top: responsiveHeight(55, context),
-                  left: responsiveWidth(15, context),
-                  right: responsiveWidth(15, context),
-                  bottom: responsiveHeight(18, context),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FadeInDown(
-                      child: Text(
-                        _namaz_admin['name'].toString(),
-                        style: GoogleFonts.inter(
-                          textStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: responsiveText(18, context),
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: RefreshIndicator(
-                onRefresh: () => getData(),
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  children: [
-                    Column(
-                      children: [
-                        SizedBox(
-                          height: responsiveHeight(20, context),
-                        ),
-                        Text(
-                          'Update Masjid Namaz Timing',
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: responsiveHeight(55, context),
+                    left: responsiveWidth(15, context),
+                    right: responsiveWidth(15, context),
+                    bottom: responsiveHeight(18, context),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FadeInDown(
+                        child: Text(
+                          _namaz_admin['name'].toString(),
                           style: GoogleFonts.inter(
                             textStyle: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: responsiveText(16, context),
+                              fontSize: responsiveText(18, context),
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: responsiveHeight(20, context),
-                        ),
-                        GridView.count(
-                          physics: ScrollPhysics(),
-                          padding: EdgeInsets.only(
-                            left: responsiveWidth(16.5, context),
-                            right: responsiveWidth(16.5, context),
-                          ),
-                          crossAxisSpacing: responsiveWidth(12, context),
-                          crossAxisCount: 2,
-                          shrinkWrap: true,
-                          children: [
-                            for (var namaz in namazKeys)
-                              MasjidNamazTimingCardAdmin(
-                                start: TimeOfDay.fromDateTime(
-                                  DateTime.parse(
-                                    _namaz_admin['timing'][namaz]["azan_time"],
-                                  ),
-                                ),
-                                end: TimeOfDay.fromDateTime(
-                                  DateTime.parse(
-                                    _namaz_admin['timing'][namaz]
-                                        ["jammat_time"],
-                                  ),
-                                ),
-                                name: namaz.toString().toUpperCase(),
-                                time: TimeOfDay.fromDateTime(
-                                      DateTime.parse(
-                                        _namaz_admin!['timing'][namaz]
-                                            ["azan_time"],
-                                      ),
-                                    ).format(context).toString() +
-                                    ' - ' +
-                                    TimeOfDay.fromDateTime(
-                                      DateTime.parse(
-                                        _namaz_admin!['timing'][namaz]
-                                            ["jammat_time"],
-                                      ),
-                                    ).format(context).toString(),
-                              ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: () => getData(),
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    children: [
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: responsiveHeight(20, context),
+                          ),
+                          Text(
+                            'Update Masjid Namaz Timing',
+                            style: GoogleFonts.inter(
+                              textStyle: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: responsiveText(16, context),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: responsiveHeight(20, context),
+                          ),
+                          GridView.count(
+                            physics: ScrollPhysics(),
+                            padding: EdgeInsets.only(
+                              left: responsiveWidth(16.5, context),
+                              right: responsiveWidth(16.5, context),
+                            ),
+                            crossAxisSpacing: responsiveWidth(12, context),
+                            crossAxisCount: 2,
+                            shrinkWrap: true,
+                            children: [
+                              for (var namaz in namazKeys)
+                                MasjidNamazTimingCardAdmin(
+                                  start: TimeOfDay.fromDateTime(
+                                    DateTime.parse(
+                                      _namaz_admin['timing'][namaz]
+                                          ["azan_time"],
+                                    ),
+                                  ),
+                                  end: TimeOfDay.fromDateTime(
+                                    DateTime.parse(
+                                      _namaz_admin['timing'][namaz]
+                                          ["jammat_time"],
+                                    ),
+                                  ),
+                                  name: namaz.toString().toUpperCase(),
+                                  time: TimeOfDay.fromDateTime(
+                                        DateTime.parse(
+                                          _namaz_admin!['timing'][namaz]
+                                              ["azan_time"],
+                                        ),
+                                      ).format(context).toString() +
+                                      ' - ' +
+                                      TimeOfDay.fromDateTime(
+                                        DateTime.parse(
+                                          _namaz_admin!['timing'][namaz]
+                                              ["jammat_time"],
+                                        ),
+                                      ).format(context).toString(),
+                                ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -206,7 +206,9 @@ class _MasjidTimingChangeScreenState extends State<MasjidTimingChangeScreen> {
                               context: context,
                               value: widget.time2,
                               onChange: (val) {
-                                widget.time2 = val;
+                                setState(() {
+                                  widget.time2 = val;
+                                });
                               },
                             ),
                           );
@@ -310,14 +312,17 @@ class _MasjidTimingChangeScreenState extends State<MasjidTimingChangeScreen> {
                                         : final2.toString(),
                                   }),
                                 );
-                          ;
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      widget.uveshAdmin == true
-                                          ? AdminScreen()
-                                          : MasjidTimingScreen()));
+
+                          widget.uveshAdmin == true
+                              ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AdminScreen()))
+                              : Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          MasjidTimingScreen()));
                         },
                         child: Container(
                           height: responsiveHeight(56, context),

@@ -66,119 +66,122 @@ class _AdminScreenState extends State<AdminScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFF1E1E1E),
-      body: Column(
-        children: [
-          Container(
-            height: responsiveHeight(100, context),
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/tab_design.png'),
-                fit: BoxFit.fill,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: Color(0xFF1E1E1E),
+        body: Column(
+          children: [
+            Container(
+              height: responsiveHeight(100, context),
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/tab_design.png'),
+                  fit: BoxFit.fill,
+                ),
+                color: Color(0xFF77B255),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
               ),
-              color: Color(0xFF77B255),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10),
-              ),
-            ),
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: responsiveHeight(55, context),
-                left: responsiveWidth(15, context),
-                right: responsiveWidth(15, context),
-                bottom: responsiveHeight(18, context),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FadeInDown(
-                    child: Text(
-                      'Admin',
-                      style: GoogleFonts.inter(
-                        textStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: responsiveText(18, context),
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: () => getData(),
-              child: ListView(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                children: [
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: responsiveHeight(20, context),
-                      ),
-                      Text(
-                        'Update The Namaz Timing',
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: responsiveHeight(55, context),
+                  left: responsiveWidth(15, context),
+                  right: responsiveWidth(15, context),
+                  bottom: responsiveHeight(18, context),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FadeInDown(
+                      child: Text(
+                        'Admin',
                         style: GoogleFonts.inter(
                           textStyle: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: responsiveText(16, context),
+                            fontSize: responsiveText(18, context),
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: responsiveHeight(20, context),
-                      ),
-                      GridView.count(
-                        physics: ScrollPhysics(),
-                        padding: EdgeInsets.only(
-                          left: responsiveWidth(16.5, context),
-                          right: responsiveWidth(16.5, context),
-                        ),
-                        crossAxisSpacing: responsiveWidth(12, context),
-                        crossAxisCount: 2,
-                        shrinkWrap: true,
-                        children: [
-                          for (var namaz in _namaz_admin['timing']!)
-                            NamazTimingCardAdmin(
-                              start: TimeOfDay.fromDateTime(
-                                DateTime.parse(
-                                  namaz["start"]!,
-                                ),
-                              ),
-                              end: TimeOfDay.fromDateTime(
-                                DateTime.parse(
-                                  namaz["end"]!,
-                                ),
-                              ),
-                              name: namaz['name'].toString().toUpperCase(),
-                              time: TimeOfDay.fromDateTime(
-                                    DateTime.parse(
-                                      namaz["start"]!,
-                                    ),
-                                  ).format(context).toString() +
-                                  ' - ' +
-                                  TimeOfDay.fromDateTime(
-                                    DateTime.parse(
-                                      namaz["end"]!,
-                                    ),
-                                  ).format(context).toString(),
-                            ),
-                        ],
-                      ),
-                    ],
-                  )
-                ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: () => getData(),
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  children: [
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: responsiveHeight(20, context),
+                        ),
+                        Text(
+                          'Update The Namaz Timing',
+                          style: GoogleFonts.inter(
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: responsiveText(16, context),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: responsiveHeight(20, context),
+                        ),
+                        GridView.count(
+                          physics: ScrollPhysics(),
+                          padding: EdgeInsets.only(
+                            left: responsiveWidth(16.5, context),
+                            right: responsiveWidth(16.5, context),
+                          ),
+                          crossAxisSpacing: responsiveWidth(12, context),
+                          crossAxisCount: 2,
+                          shrinkWrap: true,
+                          children: [
+                            for (var namaz in _namaz_admin['timing']!)
+                              NamazTimingCardAdmin(
+                                start: TimeOfDay.fromDateTime(
+                                  DateTime.parse(
+                                    namaz["start"]!,
+                                  ),
+                                ),
+                                end: TimeOfDay.fromDateTime(
+                                  DateTime.parse(
+                                    namaz["end"]!,
+                                  ),
+                                ),
+                                name: namaz['name'].toString().toUpperCase(),
+                                time: TimeOfDay.fromDateTime(
+                                      DateTime.parse(
+                                        namaz["start"]!,
+                                      ),
+                                    ).format(context).toString() +
+                                    ' - ' +
+                                    TimeOfDay.fromDateTime(
+                                      DateTime.parse(
+                                        namaz["end"]!,
+                                      ),
+                                    ).format(context).toString(),
+                              ),
+                          ],
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
